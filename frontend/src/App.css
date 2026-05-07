@@ -1,0 +1,55 @@
+/* App-specific styles */
+.hero-gradient {
+    background: radial-gradient(ellipse at 50% 0%, rgba(124, 58, 237, 0.15) 0%, transparent 50%);
+}
+
+.format-card-overlay {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.3) 50%, transparent 100%);
+}
+
+.input-glow:focus-within {
+    box-shadow: 0 0 40px -10px rgba(124, 58, 237, 0.6);
+}
+
+/* Subtitle styles for video */
+.subtitle-text {
+    text-shadow: 
+        2px 2px 4px rgba(0, 0, 0, 0.9),
+        -1px -1px 2px rgba(0, 0, 0, 0.9),
+        1px -1px 2px rgba(0, 0, 0, 0.9),
+        -1px 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+/* News ticker */
+.news-ticker {
+    background: linear-gradient(90deg, #7c3aed 0%, #6d28d9 100%);
+}
+
+/* Meme overlay animation */
+.meme-overlay-left {
+    animation: slide-in-left 0.3s ease-out forwards;
+}
+
+.meme-overlay-right {
+    animation: slide-in-right 0.3s ease-out forwards;
+}
+
+/* Reflection effect */
+.reflection-blur {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+/* Format selector modal */
+.format-modal-enter {
+    animation: fade-in-up 0.3s ease-out forwards;
+}
+
+/* Stagger animation for cards */
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }
+.stagger-5 { animation-delay: 0.25s; }
+.stagger-6 { animation-delay: 0.3s; }
