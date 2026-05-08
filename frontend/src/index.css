@@ -122,7 +122,8 @@
 [data-theme="light"] .pricing-price,
 [data-theme="light"] .pricing-credits-text,
 [data-theme="light"] .faq-question-text,
-[data-theme="light"] .faq-answer {
+[data-theme="light"] .faq-answer,
+[data-theme="light"] .faq-answer p {
   color: #1A1A1C !important;
 }
 [data-theme="light"] .upgrade-subtitle,
@@ -151,6 +152,11 @@
 [data-theme="light"] .pricing-subscribe-btn {
   background: #1A1A1C !important;
   color: #FFFFFF !important;
+}
+/* Disable gradient sheen pseudo-element on light theme */
+[data-theme="light"] .pricing-subscribe-btn::before {
+  display: none !important;
+  background: none !important;
 }
 [data-theme="light"] .upgrade-billing-tabs {
   background: #E5E5EA !important;
@@ -187,13 +193,24 @@
   color: rgba(0, 0, 0, 0.55) !important;
 }
 
-/* Profile page chevrons / icons */
-[data-theme="light"] .settings-menu-icon,
+/* Profile page chevrons / icons (general — but NOT logout/delete which stay red) */
 [data-theme="light"] .settings-menu-arrow,
 [data-theme="light"] .profile-v2-arrow,
 [data-theme="light"] .profile-v2-close-btn,
 [data-theme="light"] .profile-v2-back-btn {
   color: #1A1A1C !important;
+}
+/* Generic settings-menu-icon dark, but exclude logout/delete variants */
+[data-theme="light"] .settings-menu-item:not(.logout):not(.logout-separate):not(.delete) .settings-menu-icon {
+  color: #1A1A1C !important;
+}
+
+/* Log out button — keep red icon + text */
+[data-theme="light"] .settings-menu-item.logout-separate .settings-menu-icon,
+[data-theme="light"] .settings-menu-item.logout-separate .settings-menu-text,
+[data-theme="light"] .settings-menu-item.logout .settings-menu-icon,
+[data-theme="light"] .settings-menu-item.logout .settings-menu-text {
+  color: #FF4444 !important;
 }
 
 /* Account divider */
@@ -232,14 +249,33 @@
 }
 
 /* Avatar / profile card */
-[data-theme="light"] .profile-v2-user-card,
-[data-theme="light"] .profile-v2-avatar {
-  background: #FFFFFF !important;
+[data-theme="light"] .profile-v2-user-card {
+  background: #1A1A1C !important;
   border: 0.5px solid rgba(0, 0, 0, 0.08) !important;
 }
+[data-theme="light"] .profile-v2-avatar {
+  background: #1A1A1C !important;
+  border: 0.5px solid rgba(255, 255, 255, 0.08) !important;
+}
+[data-theme="light"] .header-avatar-btn {
+  background: #1A1A1C !important;
+}
+/* Default avatar icon stays white inside the dark avatar */
 [data-theme="light"] .default-avatar-icon path,
-[data-theme="light"] .default-avatar-icon-large path {
-  fill: #1A1A1C !important;
+[data-theme="light"] .default-avatar-icon-large path,
+[data-theme="light"] .header-avatar-icon path {
+  fill: #FFFFFF !important;
+}
+[data-theme="light"] .header-avatar-icon {
+  color: #FFFFFF !important;
+}
+/* Nickname + plan inside the dark Account card → white */
+[data-theme="light"] .profile-v2-user-card .profile-v2-username,
+[data-theme="light"] .profile-v2-user-card .profile-v2-plan {
+  color: #FFFFFF !important;
+}
+[data-theme="light"] .profile-v2-user-card .profile-v2-arrow {
+  color: rgba(255, 255, 255, 0.6) !important;
 }
 
 /* Delete account text stays red */
@@ -539,16 +575,23 @@
 }
 
 /* === LIGHT THEME — targeted overrides, minimal and clean === */
-[data-theme="light"] .create-input-area,
-[data-theme="light"] .input-outer {
+[data-theme="light"] .create-input-area {
   background: transparent !important;
   box-shadow: none !important;
 }
 
+/* Outer wrapper: darker than page bg, mirrors dark-theme layered look */
+[data-theme="light"] .input-outer {
+  background: #E5E5EA !important;
+  border: 0.5px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Inner field: white, sits inside the outer wrapper */
 [data-theme="light"] .input-inner {
   background: #FFFFFF !important;
-  border: 0.5px solid rgba(0, 0, 0, 0.1) !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border: 0.5px solid rgba(0, 0, 0, 0.06) !important;
+  box-shadow: none !important;
 }
 
 [data-theme="light"] .input-inner textarea,
@@ -640,6 +683,50 @@
 [data-theme="light"] .appearance-label,
 [data-theme="light"] .language-name {
   color: #1A1A1C !important;
+}
+
+/* ==========================================================
+   BLACK SECTION (anonymous landing — below the white border)
+   Everything inside .black-section-start MUST stay dark-themed,
+   exactly like the dark version. We re-assert dark colors so
+   earlier light-theme rules do not bleed in.
+   ========================================================== */
+[data-theme="light"] .black-section-start,
+[data-theme="light"] .black-section-start .examples-section-new,
+[data-theme="light"] .black-section-start .how-section,
+[data-theme="light"] .black-section-start .formats-section-new,
+[data-theme="light"] .black-section-start .discover-tools-section,
+[data-theme="light"] .black-section-start .cta-section,
+[data-theme="light"] .black-section-start .footer-section {
+  background: #000000 !important;
+}
+
+[data-theme="light"] .black-section-start h1,
+[data-theme="light"] .black-section-start h2,
+[data-theme="light"] .black-section-start h3,
+[data-theme="light"] .black-section-start h4,
+[data-theme="light"] .black-section-start .section-title,
+[data-theme="light"] .black-section-start .cta-title,
+[data-theme="light"] .black-section-start .example-card-title,
+[data-theme="light"] .black-section-start .format-card-name,
+[data-theme="light"] .black-section-start .discover-tool-title,
+[data-theme="light"] .black-section-start .footer-column-title,
+[data-theme="light"] .black-section-start .footer-link,
+[data-theme="light"] .black-section-start .footer-logo-svg,
+[data-theme="light"] .black-section-start .footer-logo-svg path {
+  color: #FFFFFF !important;
+  fill: #FFFFFF !important;
+}
+
+[data-theme="light"] .black-section-start .example-card-subtitle,
+[data-theme="light"] .black-section-start .cta-subtitle,
+[data-theme="light"] .black-section-start .discover-tool-subtitle {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Rounded "white border" between light page and black section */
+[data-theme="light"] .black-section-start::before {
+  background: #F2F2F7 !important;
 }
 
 /* Smooth theme transition on critical containers only */
