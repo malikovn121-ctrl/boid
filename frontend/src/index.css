@@ -250,12 +250,13 @@
 
 /* Avatar / profile card */
 [data-theme="light"] .profile-v2-user-card {
-  background: #1A1A1C !important;
+  background: #FFFFFF !important;
   border: 0.5px solid rgba(0, 0, 0, 0.08) !important;
 }
-[data-theme="light"] .profile-v2-avatar {
+/* Default avatar circle (header + Account + Profile edit) — always dark like buttons */
+[data-theme="light"] .profile-v2-avatar,
+[data-theme="light"] .profile-edit-avatar-large {
   background: #1A1A1C !important;
-  border: 0.5px solid rgba(255, 255, 255, 0.08) !important;
 }
 [data-theme="light"] .header-avatar-btn {
   background: #1A1A1C !important;
@@ -266,16 +267,9 @@
 [data-theme="light"] .header-avatar-icon path {
   fill: #FFFFFF !important;
 }
-[data-theme="light"] .header-avatar-icon {
+[data-theme="light"] .header-avatar-icon,
+[data-theme="light"] .default-avatar-icon-large {
   color: #FFFFFF !important;
-}
-/* Nickname + plan inside the dark Account card → white */
-[data-theme="light"] .profile-v2-user-card .profile-v2-username,
-[data-theme="light"] .profile-v2-user-card .profile-v2-plan {
-  color: #FFFFFF !important;
-}
-[data-theme="light"] .profile-v2-user-card .profile-v2-arrow {
-  color: rgba(255, 255, 255, 0.6) !important;
 }
 
 /* Delete account text stays red */
@@ -509,18 +503,32 @@
   color: #1A1A1C !important;
 }
 
-/* Three-dot context menu */
+/* Three-dot context menu — keep DARK like dark theme so its white text remains readable */
 [data-theme="light"] .video-menu-dropdown,
 [data-theme="light"] .context-menu,
-[data-theme="light"] .menu-dropdown {
-  background: #FFFFFF !important;
-  border: 0.5px solid rgba(0, 0, 0, 0.08) !important;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+[data-theme="light"] .menu-dropdown,
+[data-theme="light"] .creation-menu-dropdown {
+  background: #0F0F10 !important;
+  border: 0.5px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
 }
 [data-theme="light"] .video-menu-dropdown button,
 [data-theme="light"] .context-menu button,
-[data-theme="light"] .menu-dropdown button {
-  color: #1A1A1C !important;
+[data-theme="light"] .menu-dropdown button,
+[data-theme="light"] .creation-menu-dropdown button {
+  color: #FFFFFF !important;
+}
+/* Last item in creation menu (Delete) stays red */
+[data-theme="light"] .creation-menu-dropdown button:last-child {
+  color: #FF4444 !important;
+}
+
+/* Attachment X (cross) on uploaded preview — always white on dark circle */
+[data-theme="light"] .attachment-remove {
+  color: #FFFFFF !important;
+}
+[data-theme="light"] .attachment-remove svg {
+  color: #FFFFFF !important;
 }
 
 /* Inputs that aren't yet covered (search, etc) */
@@ -727,6 +735,122 @@
 /* Rounded "white border" between light page and black section */
 [data-theme="light"] .black-section-start::before {
   background: #F2F2F7 !important;
+}
+
+/* "Overview" header text — when scrolled, sits over dark area → keep white */
+[data-theme="light"] .header-overview-text {
+  color: #FFFFFF !important;
+}
+
+/* CTA "Get started" button at bottom of landing — always white bg + black text,
+   regardless of theme (it lives on the always-black section). */
+[data-theme="light"] .cta-get-started-btn {
+  background: #FFFFFF !important;
+  color: #000000 !important;
+}
+
+/* ==========================================================
+   AUTH PAGE — light theme
+   ========================================================== */
+[data-theme="light"] .auth-page {
+  background: #F2F2F7 !important;
+}
+
+/* Hide white-grid SVG on light theme (lines drawn in white become invisible) */
+[data-theme="light"] .auth-grid {
+  display: none !important;
+}
+[data-theme="light"] .auth-gradient-overlay {
+  background: linear-gradient(to top, #F2F2F7 0%, transparent 100%) !important;
+}
+
+/* Headings */
+[data-theme="light"] .auth-page-title-large,
+[data-theme="light"] .auth-page-title {
+  color: #1A1A1C !important;
+}
+[data-theme="light"] .auth-page-subtitle,
+[data-theme="light"] .auth-page-subtitle-form {
+  color: rgba(0, 0, 0, 0.55) !important;
+}
+
+/* Back button → white card with dark icon */
+[data-theme="light"] .auth-back-btn {
+  background: #FFFFFF !important;
+  border: 0.5px solid rgba(0, 0, 0, 0.08) !important;
+  color: #1A1A1C !important;
+}
+
+/* Continue with Google — BLACK button, white text */
+[data-theme="light"] .auth-social-btn.google {
+  background: #1A1A1C !important;
+  color: #FFFFFF !important;
+}
+/* Continue with Email — light off-white card, dark text + icon */
+[data-theme="light"] .auth-social-btn.email {
+  background: #E5E5EA !important;
+  color: #1A1A1C !important;
+  border: 0.5px solid rgba(0, 0, 0, 0.06) !important;
+}
+[data-theme="light"] .auth-social-btn.email svg {
+  color: #1A1A1C !important;
+}
+
+/* Input fields — white card, dark text, gray placeholder */
+[data-theme="light"] .auth-input {
+  background: #FFFFFF !important;
+  color: #1A1A1C !important;
+  border: 2px solid transparent !important;
+}
+[data-theme="light"] .auth-input:focus {
+  border-color: #1A1A1C !important;
+}
+[data-theme="light"] .auth-input::placeholder {
+  color: rgba(0, 0, 0, 0.42) !important;
+}
+[data-theme="light"] .password-toggle {
+  color: rgba(0, 0, 0, 0.5) !important;
+}
+[data-theme="light"] .password-toggle:hover {
+  color: #1A1A1C !important;
+}
+
+/* Submit button: disabled → light gray (slightly darker than card),
+   active → black with white text. Disable any gradient sheen. */
+[data-theme="light"] .auth-submit-btn {
+  background: #E5E5EA !important;
+  color: rgba(0, 0, 0, 0.42) !important;
+}
+[data-theme="light"] .auth-submit-btn.active {
+  background: #1A1A1C !important;
+  color: #FFFFFF !important;
+}
+[data-theme="light"] .auth-submit-btn.active::before {
+  display: none !important;
+}
+
+/* Form footer — Lost password (gray), Sign up / Log in link (bold dark) */
+[data-theme="light"] .auth-link-gray {
+  color: rgba(0, 0, 0, 0.5) !important;
+}
+[data-theme="light"] .auth-switch-text {
+  color: rgba(0, 0, 0, 0.55) !important;
+}
+[data-theme="light"] .auth-link-white,
+[data-theme="light"] .auth-switch-text .auth-link-white {
+  color: #1A1A1C !important;
+  font-weight: 700 !important;
+}
+
+/* Privacy text — gray base, slightly darker links */
+[data-theme="light"] .auth-privacy-text {
+  color: rgba(0, 0, 0, 0.45) !important;
+}
+[data-theme="light"] .auth-privacy-link {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+[data-theme="light"] .auth-privacy-link:hover {
+  color: #1A1A1C !important;
 }
 
 /* Smooth theme transition on critical containers only */
@@ -1726,7 +1850,7 @@ body {
 /* Discover tools section */
 .discover-tools-section {
   margin: 0;
-  padding: 32px 0 80px 0;
+  padding: 32px 0 0 0;
   background: #000000;
 }
 
@@ -7272,7 +7396,7 @@ body {
 .cta-get-started-btn {
   margin-top: 24px;
   padding: 14px 52px;
-  background: var(--white);
+  background: #FFFFFF;
   color: #000000;
   border: none;
   border-radius: 19px;

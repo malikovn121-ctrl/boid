@@ -1934,7 +1934,7 @@ export const MainPage = () => {
             </span> videos
           </h2>
           <p className="cta-subtitle">Turn any prompt into a polished edited video — AI does the rest.</p>
-          <button className="cta-get-started-btn" data-testid="cta-get-started-btn">Get started</button>
+          <button className="cta-get-started-btn" onClick={() => navigate('/auth')} data-testid="cta-get-started-btn">Get started</button>
         </div>
         
         {/* Footer */}
