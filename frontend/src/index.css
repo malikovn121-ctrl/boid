@@ -883,26 +883,37 @@
   gap: 16px !important;
 }
 
-/* "See all" button under Styles section on anonymous landing */
+/* "See all" button under Styles section on anonymous landing — pill-shaped CTA */
 .formats-see-all-landing {
-  display: block;
-  margin: 16px auto 0;
-  padding: 12px 28px;
-  background: rgba(255, 255, 255, 0.1);
-  color: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 24px auto 0;
+  padding: 14px 36px;
+  background: #FFFFFF;
+  color: #000000;
   border: none;
-  border-radius: 30px;
+  border-radius: 999px;
   font-family: -apple-system, 'SF Pro Text', sans-serif;
   font-size: 15px;
   font-weight: 600;
+  letter-spacing: 0.01em;
   cursor: pointer;
   transition: background 0.2s ease, transform 0.15s ease;
 }
 .formats-see-all-landing:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.9);
 }
 .formats-see-all-landing:active {
   transform: scale(0.97);
+}
+/* Center inside the formats-section-new */
+.formats-section-new {
+  display: flex;
+  flex-direction: column;
+}
+.formats-section-new > .formats-see-all-landing {
+  align-self: center;
 }
 
 /* Auth privacy text — slightly more muted in dark theme (darker = less white)
