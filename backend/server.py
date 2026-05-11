@@ -2383,6 +2383,36 @@ async def logout(request: Request, response: Response):
     return {"message": "Logged out"}
 
 
+@api_router.delete("/auth/me")
+async def delete_account(request: Request, response: Response):
+    """Permanently delete the currently authenticated user and all their data."""
+    # Resolve session token from cookie or Authorization header
+    session_token = request.cookies.get("session_token")
+    if not session_token:
+        auth_header = request.headers.get("Authorization")
+        if auth_header and auth_header.startswith("Bearer "):
+            session_token = auth_header[7:]
+
+    if not session_token:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+
+    session_doc = await db.user_sessions.find_one(
+        {"session_token": session_token}, {"_id": 0}
+    )
+    if not session_doc:
+        raise HTTPException(status_code=401, detail="Invalid session")
+
+    user_id = session_doc["user_id"]
+
+    # Remove user data: videos, sessions, user record
+    await db.videos.delete_many({"user_id": user_id})
+    await db.user_sessions.delete_many({"user_id": user_id})
+    await db.users.delete_one({"user_id": user_id})
+
+    response.delete_cookie(key="session_token", path="/")
+    return {"message": "Account deleted"}
+
+
 # ==================== EMAIL AUTH ROUTES ====================
 
 class EmailAuthRequest(BaseModel):

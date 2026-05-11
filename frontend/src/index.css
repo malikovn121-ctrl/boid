@@ -853,6 +853,137 @@
   color: #1A1A1C !important;
 }
 
+/* ==========================================================
+   GLOBAL TWEAKS (both themes)
+   ========================================================== */
+
+/* Plus / Mic icons inside the input — slightly bigger */
+.input-icon-btn svg {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+/* Send button arrow keeps its size */
+.send-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Example cards: -5px corner radius */
+.example-card-content {
+  border-radius: 34px !important;
+}
+
+/* Format cards: -4px corner radius + slightly shorter height + gap = edge padding */
+.format-card-carousel {
+  aspect-ratio: 5 / 6 !important;
+  border-radius: 29px !important;
+}
+.formats-carousel-inner {
+  gap: 16px !important;
+}
+
+/* "See all" button under Styles section on anonymous landing */
+.formats-see-all-landing {
+  display: block;
+  margin: 16px auto 0;
+  padding: 12px 28px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 30px;
+  font-family: -apple-system, 'SF Pro Text', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+.formats-see-all-landing:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+.formats-see-all-landing:active {
+  transform: scale(0.97);
+}
+
+/* Auth privacy text — slightly more muted in dark theme (darker = less white)
+   and slightly lighter (less black) in light theme, per user request. */
+.auth-privacy-text {
+  color: rgba(255, 255, 255, 0.32) !important;
+}
+.auth-privacy-link {
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+/* Light theme already overrides above; lighten privacy text a touch there too */
+[data-theme="light"] .auth-privacy-text {
+  color: rgba(0, 0, 0, 0.32) !important;
+}
+[data-theme="light"] .auth-privacy-link {
+  color: rgba(0, 0, 0, 0.55) !important;
+}
+
+/* Input outer/inner — always opaque, no transition flicker on first paint */
+.input-outer {
+  background-color: #1D1E20;
+}
+.input-inner {
+  background-color: #38393B;
+}
+[data-theme="light"] .input-outer {
+  background-color: #E5E5EA !important;
+}
+[data-theme="light"] .input-inner {
+  background-color: #FFFFFF !important;
+}
+.input-outer, .input-inner {
+  /* Disable opacity/background transitions on the input shells to prevent
+     the brief see-through flash that happens during initial paint and theme
+     switching. Other transitions (border, color) are still allowed. */
+  transition: border-color 0.2s ease, color 0.2s ease !important;
+}
+
+/* Credits progress card — suppress any focus / active highlight that
+   lingers after navigating back from the Profile edit view */
+.credits-progress-card,
+.credits-progress-card:focus,
+.credits-progress-card:focus-visible,
+.credits-progress-card:active,
+.credits-progress-card:hover,
+.profile-v2-user-card:focus,
+.profile-v2-user-card:focus-visible {
+  outline: none !important;
+  background: #1D1E20;
+}
+[data-theme="light"] .credits-progress-card,
+[data-theme="light"] .credits-progress-card:focus,
+[data-theme="light"] .credits-progress-card:focus-visible,
+[data-theme="light"] .credits-progress-card:active,
+[data-theme="light"] .credits-progress-card:hover,
+[data-theme="light"] .profile-v2-user-card:focus,
+[data-theme="light"] .profile-v2-user-card:focus-visible {
+  background: #FFFFFF !important;
+  outline: none !important;
+}
+
+/* Appearance icon — slightly bigger than other settings icons */
+.settings-menu-item[data-testid="appearance-btn"] .settings-menu-icon {
+  width: 26px !important;
+  height: 26px !important;
+}
+
+/* Attachments row — hide scrollbar & prevent edge artifacts during scroll */
+.attachments-row {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overscroll-behavior-x: contain;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+.attachments-row::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
 /* Smooth theme transition on critical containers only */
 body, .input-outer, .input-inner, .creation-card, .settings-menu-card,
 .credits-progress-card, .language-popup, .appearance-popup, .formats-popup,
@@ -6093,14 +6224,14 @@ body {
 .formats-grid-logged {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  gap: 16px;
   margin-bottom: 20px;
 }
 
 .format-card-carousel-btn {
   width: 100%;
-  aspect-ratio: 3 / 4;
-  border-radius: 33px;
+  aspect-ratio: 5 / 6;
+  border-radius: 29px;
   overflow: hidden;
   position: relative;
   border: none;

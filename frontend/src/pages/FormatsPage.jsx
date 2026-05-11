@@ -35,7 +35,7 @@ const FormatsPage = () => {
         >
           <ArrowLeft className="w-6 h-6" />
         </button>
-        <h1 className="formats-page-title">Formats</h1>
+        <h1 className="formats-page-title">Styles</h1>
         <div className="header-spacer" />
       </header>
 

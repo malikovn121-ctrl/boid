@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ChevronLeft, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 import axios from "axios";
+import { tr } from "../utils/translations";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const FRONTEND_URL = window.location.origin;
@@ -55,11 +56,11 @@ const AuthPage = () => {
       
       const userData = response.data;
       localStorage.setItem("slind_user", JSON.stringify(userData));
-      toast.success("Вход выполнен!");
+      toast.success(tr('loginSuccess'));
       navigate('/');
     } catch (error) {
       console.error("Login error:", error);
-      toast.error(error.response?.data?.detail || "Ошибка входа");
+      toast.error(error.response?.data?.detail || tr('loginError'));
     } finally {
       setIsLoading(false);
     }
@@ -77,11 +78,11 @@ const AuthPage = () => {
       
       const userData = response.data;
       localStorage.setItem("slind_user", JSON.stringify(userData));
-      toast.success("Регистрация успешна!");
+      toast.success(tr('signupSuccess'));
       navigate('/');
     } catch (error) {
       console.error("Signup error:", error);
-      toast.error(error.response?.data?.detail || "Ошибка регистрации");
+      toast.error(error.response?.data?.detail || tr('signupError'));
     } finally {
       setIsLoading(false);
     }
@@ -225,7 +226,7 @@ const AuthPage = () => {
                   <button 
                     type="button"
                     className="auth-link auth-link-gray"
-                    onClick={() => toast.info("Функция восстановления пароля скоро будет доступна")}
+                    onClick={() => toast.info(tr('lostPasswordSoon'))}
                     data-testid="forgot-password-btn"
                   >
                     Lost password?

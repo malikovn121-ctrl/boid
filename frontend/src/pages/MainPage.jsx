@@ -4,7 +4,7 @@ import { Plus, ArrowUp, X, Loader2, Search, ChevronRight, ChevronLeft, Check, Mo
 import { toast } from "sonner";
 import axios from "axios";
 import ProfilePage from "../components/custom/ProfilePage";
-import { getTranslation } from "../utils/translations";
+import { getTranslation, tr } from "../utils/translations";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -176,6 +176,20 @@ export const MainPage = () => {
   const navigate = useNavigate();
   const textareaRef = useRef(null);
   const fileInputRef = useRef(null);
+
+  // Auto-resize textarea up to ~9 lines, then scroll
+  const autoResizeTextarea = () => {
+    const ta = textareaRef.current;
+    if (!ta) return;
+    const styles = window.getComputedStyle(ta);
+    const lineHeight = parseFloat(styles.lineHeight) || 24;
+    const paddingTop = parseFloat(styles.paddingTop) || 0;
+    const paddingBottom = parseFloat(styles.paddingBottom) || 0;
+    const maxHeight = (lineHeight * 9) + paddingTop + paddingBottom;
+    ta.style.height = 'auto';
+    ta.style.height = `${Math.min(ta.scrollHeight, maxHeight)}px`;
+    ta.style.overflowY = ta.scrollHeight > maxHeight ? 'auto' : 'hidden';
+  };
   
   // State
   const [prompt, setPrompt] = useState("");
@@ -426,10 +440,10 @@ export const MainPage = () => {
       } catch (err) {
         console.warn('Cancel API failed (non-fatal):', err);
       }
-      toast.success('Генерация остановлена');
+      toast.success(tr('generationStopped'));
     } catch (e) {
       console.error('Stop failed:', e);
-      toast.error('Не удалось остановить');
+      toast.error(tr('stopFailed'));
     }
   };
 
@@ -447,10 +461,10 @@ export const MainPage = () => {
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
       setOpenMenu(null);
-      toast.success('Видео скачивается...');
+      toast.success(tr('videoDownloading'));
     } catch (error) {
       console.error('Download error:', error);
-      toast.error('Ошибка при скачивании');
+      toast.error(tr('downloadError'));
     }
   };
 
@@ -461,10 +475,10 @@ export const MainPage = () => {
       setUserVideos(prev => prev.filter(v => v.id !== videoId));
       setGeneratingVideos(prev => prev.filter(v => v.id !== videoId));
       setOpenMenu(null);
-      toast.success('Видео удалено');
+      toast.success(tr('videoDeleted'));
     } catch (error) {
       console.error('Delete error:', error);
-      toast.error('Ошибка при удалении');
+      toast.error(tr('deleteError'));
     }
   };
 
@@ -480,10 +494,10 @@ export const MainPage = () => {
       await axios.patch(`${API}/videos/${video.id}`, { prompt: trimmed });
       setUserVideos(prev => prev.map(v => v.id === video.id ? { ...v, prompt: trimmed } : v));
       setGeneratingVideos(prev => prev.map(v => v.id === video.id ? { ...v, prompt: trimmed, title: trimmed } : v));
-      toast.success('Название обновлено');
+      toast.success(tr('titleUpdated'));
     } catch (error) {
       console.error('Edit error:', error);
-      toast.error('Ошибка при обновлении');
+      toast.error(tr('updateError'));
     }
   };
 
@@ -933,7 +947,7 @@ export const MainPage = () => {
             }
           }, 100);
           
-          toast.success("Создаём 3D анимацию...");
+          toast.success(tr('creating3DAnimation'));
           
           // Poll for progress
           pollVideoProgress(response.data.id);
@@ -975,13 +989,13 @@ export const MainPage = () => {
         }
       }, 100);
       
-      toast.success("Генерация началась!");
+      toast.success(tr('generationStarted'));
       
       // Poll for progress
       pollVideoProgress(response.data.id);
     } catch (error) {
       console.error("Failed to start generation:", error);
-      toast.error("Ошибка при запуске генерации");
+      toast.error(tr('generationError'));
     }
   };
 
@@ -1179,10 +1193,11 @@ export const MainPage = () => {
                     <textarea
                       ref={textareaRef}
                       value={prompt}
-                      onChange={(e) => setPrompt(e.target.value)}
+                      onChange={(e) => { setPrompt(e.target.value); autoResizeTextarea(); }}
+                      onInput={autoResizeTextarea}
                       placeholder={`nind ai, ${placeholderText}`}
                       className="prompt-textarea"
-                      rows={2}
+                      rows={1}
                       disabled={isGenerating}
                       data-testid="prompt-input"
                     />
@@ -1264,7 +1279,7 @@ export const MainPage = () => {
                       <h3 className="formats-section-label">My</h3>
                       {/* Empty state for now */}
                       <div className="my-formats-empty">
-                        <p className="no-formats-text">No custom formats</p>
+                        <p className="no-formats-text">No custom styles</p>
                       </div>
                     </div>
 
@@ -1526,7 +1541,7 @@ export const MainPage = () => {
             >
               <div className="popup-drag-handle" />
               
-              <h2 className="formats-list-title">Formats</h2>
+              <h2 className="formats-list-title">Styles</h2>
               
               <div className="formats-list-grid">
                 {FORMATS.map((format) => (
@@ -1667,10 +1682,11 @@ export const MainPage = () => {
               <textarea
                 ref={textareaRef}
                 value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
+                onChange={(e) => { setPrompt(e.target.value); autoResizeTextarea(); }}
+                onInput={autoResizeTextarea}
                 placeholder={`nind ai, ${placeholderText}`}
                 className="prompt-textarea"
-                rows={2}
+                rows={1}
                 disabled={isGenerating}
                 data-testid="prompt-input"
               />
@@ -1811,7 +1827,7 @@ export const MainPage = () => {
 
         {/* Formats section */}
         <div className="formats-section-new">
-          <h2 className="section-title">See formats</h2>
+          <h2 className="section-title">See styles</h2>
           
           <div className="formats-carousel-wrapper">
             <div className="formats-carousel-inner">
@@ -1827,6 +1843,14 @@ export const MainPage = () => {
               ))}
             </div>
           </div>
+          
+          <button 
+            className="formats-see-all-landing"
+            onClick={() => navigate('/auth')}
+            data-testid="formats-see-all-landing"
+          >
+            {t('seeAll')}
+          </button>
           
           <button className="formats-start-btn" onClick={() => navigate('/auth')} style={{ display: 'none' }}>
             Start create
@@ -1958,7 +1982,7 @@ export const MainPage = () => {
                 <h4 className="footer-column-title">Product</h4>
                 <a href="#" className="footer-link">Pricing</a>
                 <a href="#" className="footer-link">Status</a>
-                <a href="#" className="footer-link">Formats</a>
+                <a href="#" className="footer-link">Styles</a>
               </div>
               
               <div className="footer-column">

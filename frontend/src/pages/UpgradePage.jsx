@@ -34,8 +34,8 @@ const UpgradePage = () => {
     },
     {
       id: 4,
-      question: "What are custom templates and how do they work?",
-      answer: "You can create your own custom templates for videos.\nThey help speed up and automate your workflow by letting you reuse the same setup instead of writing long prompts for similar videos.\nThis is especially useful for marketing and other repetitive content tasks."
+      question: "What are custom styles and how do they work?",
+      answer: "You can create your own custom styles for videos.\nThey help speed up and automate your workflow by letting you reuse the same setup instead of writing long prompts for similar videos.\nThis is especially useful for marketing and other repetitive content tasks."
     },
     {
       id: 5,
@@ -55,7 +55,7 @@ const UpgradePage = () => {
         "AI cuts & captions",
         "AI script, speech & dubbing",
         "AI visuals & sound",
-        "5 Custom templates",
+        "5 Custom styles",
         "Fast export (1080p, parallel 3 videos)"
       ]
     },
@@ -67,7 +67,7 @@ const UpgradePage = () => {
       features: [
         "Everything in Starter, plus:",
         "Priority export (4K, parallel 8 videos)",
-        "Unlimited custom templates",
+        "Unlimited custom styles",
         "Team workspace"
       ],
       hasCreditsDropdown: true

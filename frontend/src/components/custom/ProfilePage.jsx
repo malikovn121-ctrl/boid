@@ -76,7 +76,7 @@ const showSuccessToast = (message) => {
   });
 };
 
-export const ProfilePage = ({ user, onBack, onLogout, onUpdateUser, currentLang, onLanguageChange }) => {
+export const ProfilePage = ({ user, onBack, onLogout, onUpdateUser, onUpgrade, currentLang, onLanguageChange }) => {
   const [activeView, setActiveView] = useState('main');
   const [editName, setEditName] = useState(user?.name || '');
   const [editUsername, setEditUsername] = useState(user?.username || user?.name || '');
@@ -225,7 +225,7 @@ export const ProfilePage = ({ user, onBack, onLogout, onUpdateUser, currentLang,
       if (error.response?.data?.detail) {
         setUsernameError(error.response.data.detail);
       } else {
-        toast.error("Failed to save changes");
+        toast.error(t('failedToSave'));
       }
     } finally {
       setIsSaving(false);
@@ -257,7 +257,7 @@ export const ProfilePage = ({ user, onBack, onLogout, onUpdateUser, currentLang,
       showSuccessToast(t('avatarUpdated'));
     } catch (error) {
       console.error("Failed to upload avatar:", error);
-      toast.error("Failed to upload avatar");
+      toast.error(t('failedToUploadAvatar'));
     }
   };
 
@@ -270,11 +270,31 @@ export const ProfilePage = ({ user, onBack, onLogout, onUpdateUser, currentLang,
     // Don't close popup automatically - user closes it manually
   };
 
-  const handleConfirmAction = () => {
+  const handleConfirmAction = async () => {
     if (showConfirmPopup === 'logout') {
       onLogout();
     } else if (showConfirmPopup === 'delete') {
-      toast.error("Account deletion not implemented yet");
+      try {
+        // Pull session token from stored user object (set during login/register)
+        let token = localStorage.getItem('slind_session_token');
+        if (!token) {
+          try {
+            const stored = JSON.parse(localStorage.getItem('slind_user') || 'null');
+            token = stored?.session_token;
+          } catch (_) {}
+        }
+        await axios.delete(`${API}/auth/me`, {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+          withCredentials: true
+        });
+        toast.success(t('accountDeleted'));
+        localStorage.removeItem('slind_user');
+        localStorage.removeItem('slind_session_token');
+        if (onLogout) onLogout();
+      } catch (err) {
+        console.error('Delete account error:', err);
+        toast.error(t('accountDeleteFailed'));
+      }
     }
     setShowConfirmPopup(null);
   };
@@ -309,7 +329,8 @@ export const ProfilePage = ({ user, onBack, onLogout, onUpdateUser, currentLang,
         {/* User Card */}
         <button 
           className="profile-v2-user-card"
-          onClick={() => {
+          onClick={(e) => {
+            e.currentTarget.blur();
             setEditName(user?.name || '');
             setEditUsername(userName);
             setActiveView('profile-edit');
